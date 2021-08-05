@@ -13,11 +13,21 @@
         startOllie();
       "
     >
-      skate!
+      ollie
+    </div>
+
+    <div
+      class=""
+      @click="
+        toggleClass();
+        startKickflip();
+      "
+    >
+      kickflip
     </div>
 
     <div :class="['board-meta', { rolling: isActive }]">
-      <img :class="['board', { olling: ollie }]" src="~/assets/board.png" />
+      <img :class="classes" src="~/assets/board.png" />
     </div>
 
     <!-- Import hero images + titles -->
@@ -47,8 +57,14 @@ export default {
   data() {
     return {
       isActive: false,
-      ollie: false
+      ollie: false,
+      kickflip: false
     };
+  },
+  computed: {
+    classes() {
+      return ["board", { olling: this.ollie }, { kickfliping: this.kickflip }];
+    }
   },
   methods: {
     toggleClass() {
@@ -62,6 +78,19 @@ export default {
       setTimeout(
         function() {
           this.ollie = false;
+        }.bind(this),
+        1500
+      );
+    },
+
+    startKickflip() {
+      this.kickflip = true;
+      this.endKickflip();
+    },
+    endKickflip() {
+      setTimeout(
+        function() {
+          this.kickflip = false;
         }.bind(this),
         1500
       );
@@ -98,6 +127,10 @@ export default {
       animation: ollie 1.5s forwards ease-in-out;
     }
 
+    &.kickfliping {
+      animation: kickflip 1.5s forwards ease-in-out;
+    }
+
     @keyframes ollie {
       0% {
         transform: rotate(0) translateY(0);
@@ -106,13 +139,31 @@ export default {
         transform: rotate(0) translateY(0);
       }
       50% {
-        transform: rotate(-30deg) translateY(0);
+        transform: rotate(-30deg) translateY(-20px);
       }
       75% {
-        transform: rotate(20deg) translateY(-200px);
+        transform: rotate(15deg) translateY(-200px);
       }
       100% {
-        transform: rotate(0) translateY(-1px);
+        transform: rotate(0) translateY(0);
+      }
+    }
+
+    @keyframes kickflip {
+      0% {
+        transform: rotate(0) translateY(0) rotateX(0);
+      }
+      25% {
+        transform: rotate(0) translateY(0);
+      }
+      50% {
+        transform: rotate(-30deg) translateY(-100px) rotateX(-180deg);
+      }
+      75% {
+        transform: rotate(20deg) translateY(-200px) rotateX(0);
+      }
+      100% {
+        transform: rotate(0) translateY(0);
       }
     }
   }
