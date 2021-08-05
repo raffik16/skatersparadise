@@ -6,15 +6,19 @@
       <!-- <hero-header /> -->
     </header>
 
-    <div class="" @click="toggleClass">
+    <div
+      class=""
+      @click="
+        toggleClass();
+        startOllie();
+      "
+    >
       skate!
     </div>
 
-    <img
-      class="board"
-      src="~/assets/board.png"
-      :class="['board', { box: isActive }]"
-    />
+    <div :class="['board-meta', { rolling: isActive }]">
+      <img :class="['board', { olling: ollie }]" src="~/assets/board.png" />
+    </div>
 
     <!-- Import hero images + titles -->
 
@@ -42,12 +46,25 @@ export default {
   },
   data() {
     return {
-      isActive: false
+      isActive: false,
+      ollie: false
     };
   },
   methods: {
     toggleClass() {
       this.isActive = !this.isActive;
+    },
+    startOllie() {
+      this.ollie = true;
+      this.endOllie();
+    },
+    endOllie() {
+      setTimeout(
+        function() {
+          this.ollie = false;
+        }.bind(this),
+        1500
+      );
     }
   }
 };
@@ -61,12 +78,43 @@ export default {
   align-items: center;
   justify-content: center;
 
+  .board-meta {
+    transition: all 2.5s ease-in-out;
+    transform: translate(0);
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+
+    &.rolling {
+      transform: translateX(calc(100vw - 200px));
+    }
+  }
+
   .board {
     max-width: 200px;
 
-    transition: all 0.4 ease-in-out;
+    &.olling {
+      animation: ollie 1.5s forwards ease-in-out;
+    }
 
-    align-self: flex-end;
+    @keyframes ollie {
+      0% {
+        transform: rotate(0) translateY(0);
+      }
+      25% {
+        transform: rotate(0) translateY(0);
+      }
+      50% {
+        transform: rotate(-30deg) translateY(0);
+      }
+      75% {
+        transform: rotate(20deg) translateY(-200px);
+      }
+      100% {
+        transform: rotate(0) translateY(-1px);
+      }
+    }
   }
 }
 </style>
