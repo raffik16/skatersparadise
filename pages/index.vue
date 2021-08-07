@@ -7,6 +7,17 @@
     <p>
       First pick your style, then your trick!
     </p>
+    <p>
+      This was designed for those who want to just throw some tricks but cant
+      due to whatever your situtation is. Push some buttons and land some
+      tricks.
+    </p>
+    <p>
+      Submit your own tricks @
+      <a target="_blank" href="https://github.com/raffik16/skatersparadise"
+        ><b>GitHub</b></a
+      >
+    </p>
     <div class="menu">
       <button
         class="menu-item"
@@ -90,7 +101,19 @@
           startFiveO();
         "
       >
-        Five Oh
+        5-0
+      </button>
+
+      <button
+        class="menu-item"
+        :disabled="rollingForward || rollingBack"
+        v-if="railTricks"
+        @click="
+          toggleRoll();
+          startKickflipNoseGrind();
+        "
+      >
+        Kickflip Nose Grind
       </button>
     </div>
 
@@ -126,7 +149,8 @@ export default {
       kickflip: false,
       hardflip: false,
       fiveO: false,
-      threeSixtyFlip: false
+      threeSixtyFlip: false,
+      kickflipNoseGrind: false
     };
   },
   computed: {
@@ -137,7 +161,8 @@ export default {
         { kickfliping: this.kickflip },
         { hardlfliping: this.hardflip },
         { fiveo: this.fiveO },
-        { threesixtyflip: this.threeSixtyFlip }
+        { threesixtyflip: this.threeSixtyFlip },
+        { kickflipnosegrind: this.kickflipNoseGrind }
       ];
     }
   },
@@ -228,6 +253,18 @@ export default {
         }.bind(this),
         1500
       );
+    },
+    startKickflipNoseGrind() {
+      this.kickflipNoseGrind = true;
+      this.endKickflipNoseGrind();
+    },
+    endKickflipNoseGrind() {
+      setTimeout(
+        function() {
+          this.kickflipNoseGrind = false;
+        }.bind(this),
+        1500
+      );
     }
   }
 };
@@ -266,8 +303,11 @@ export default {
   }
 
   .rail {
-    border: 8px solid teal;
+    border: 6px solid transparent;
+    border-image: linear-gradient(to right, teal, lightYellow);
+    border-image-slice: 1;
     border-bottom: 0;
+
     width: 60%;
     height: 100px;
     position: absolute;
@@ -309,7 +349,10 @@ export default {
 
     &.fiveo {
       animation: fiveo 1.5s forwards ease-in-out;
-      transform-origin: left;
+    }
+
+    &.kickflipnosegrind {
+      animation: kickflipnosegrind 1.5s forwards ease-in-out 0.2s;
     }
 
     @keyframes ollie {
@@ -398,14 +441,41 @@ export default {
       45% {
         transform: rotate(0) translateY(0);
       }
-      50% {
-        transform: rotate(-30deg) translateY(-80px);
+      55% {
+        transform: rotate(-30deg) translateY(-135px);
       }
       75% {
-        transform: rotate(-30deg) translateY(-80px);
+        transform: rotate(-30deg) translateY(-135px);
       }
       95% {
-        transform: rotate(-30deg) translateY(-80px);
+        transform: rotate(-30deg) translateY(-135px);
+      }
+      100% {
+        transform: rotate(0) translateY(0);
+      }
+    }
+
+    @keyframes kickflipnosegrind {
+      0% {
+        transform: rotate(0) translateY(0) rotateX(0);
+      }
+      15% {
+        transform: rotate(0) translateY(0) rotateX(0);
+      }
+      20% {
+        transform: rotate(-30deg) translateY(-120px) rotateX(-180deg);
+      }
+      40% {
+        transform: rotate(20deg) translateY(-120px) rotateX(0);
+      }
+      60% {
+        transform: rotate(20deg) translateY(-120px) rotateX(0);
+      }
+      80% {
+        transform: rotate(20deg) translateY(-120px) rotateX(0);
+      }
+      95% {
+        transform: rotate(0) translateY(0);
       }
       100% {
         transform: rotate(0) translateY(0);
