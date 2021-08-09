@@ -1,23 +1,23 @@
 <template>
   <!-- Main Parent Index Div -->
   <div class="main-parent">
-    <h1>
-      Skateboarding with CSS
-    </h1>
-    <p>
-      First pick your style, then your trick!
-    </p>
-    <p>
-      This was designed for those who want to just throw some tricks but cant
-      due to whatever your situtation is. Push some buttons and land some
-      tricks.
-    </p>
-    <p>
-      Submit your own tricks @
-      <a target="_blank" href="https://github.com/raffik16/skatersparadise"
-        ><b>GitHub</b></a
-      >
-    </p>
+    <div class="text">
+      <h1>
+        Skateboarding with CSS
+      </h1>
+      <p>
+        First pick your style, then your trick!
+      </p>
+      <p>
+        Click to trick
+      </p>
+      <p>
+        Submit your own tricks @
+        <a target="_blank" href="https://github.com/raffik16/skatersparadise"
+          ><b>GitHub</b></a
+        >
+      </p>
+    </div>
     <div class="menu">
       <button
         class="menu-item"
@@ -278,6 +278,20 @@ export default {
   align-items: center;
   justify-content: center;
 
+  .text {
+    text-align: center;
+    margin-top: 20px;
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 18px;
+      max-width: 500px;
+    }
+  }
+
   .menu {
     display: flex;
     margin-bottom: auto;
@@ -303,10 +317,10 @@ export default {
   }
 
   .rail {
-    border: 6px solid transparent;
-    border-image: linear-gradient(to right, teal, lightYellow);
-    border-image-slice: 1;
+    border: 6px solid teal;
     border-bottom: 0;
+
+    border-radius: 10px 10px 0 0;
 
     width: 60%;
     height: 100px;
