@@ -120,8 +120,9 @@
     <div :class="['board-meta', { rolling: rollingForward }]">
       <img :class="classes" src="~/assets/board.png" />
     </div>
-
-    <div class="rail" v-if="railTricks" />
+    <transition name="fade">
+      <div class="rail" v-if="railTricks" />
+    </transition>
   </div>
 </template>
 
@@ -339,6 +340,15 @@ export default {
     &.rolling {
       transform: translateX(calc(100vw - 200px));
     }
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.6s;
+  }
+  .fade-enter,
+  .fade-leave-to {
+    opacity: 0;
   }
 
   .board {
